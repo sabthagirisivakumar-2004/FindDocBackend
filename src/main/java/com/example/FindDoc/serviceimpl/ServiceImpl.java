@@ -3,15 +3,18 @@ package com.example.FindDoc.serviceimpl;
 import com.example.FindDoc.DTO.AuthenticationDTO;
 import com.example.FindDoc.Service.service;
 import com.example.FindDoc.entity.EventsDetails;
+import com.example.FindDoc.entity.HospitalDetails;
 import com.example.FindDoc.entity.NewsDetails;
 import com.example.FindDoc.entity.User;
 import com.example.FindDoc.repository.EventsRepository;
 import com.example.FindDoc.repository.NewsDetailsRepository;
+import com.example.FindDoc.repository.Repo;
 import com.example.FindDoc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,6 +25,8 @@ public class ServiceImpl implements service {
     NewsDetailsRepository newsRepository;
     @Autowired
     EventsRepository eventsRepository;
+    @Autowired
+    Repo hospitalDetailrepo;
     @Override
     public List<User> getAllDetails() {
         return UserRepo.findAll() ;
@@ -68,5 +73,20 @@ public class ServiceImpl implements service {
     @Override
     public EventsDetails createEvent(EventsDetails eventDetails) {
         return eventsRepository.save(eventDetails);
+    }
+    @Override
+    public List<HospitalDetails> GetHospitalDetails() {
+        return hospitalDetailrepo.findAll();
+    }
+
+    @Override
+    public void insertDetailsHospital(HospitalDetails h) {
+        hospitalDetailrepo.save(h);
+        return;
+    }
+
+    @Override
+    public Optional<HospitalDetails> selectById(String n) {
+        return hospitalDetailrepo.findById(n);
     }
 }

@@ -2,11 +2,13 @@ package com.example.FindDoc.Service;
 
 import com.example.FindDoc.DTO.AuthenticationDTO;
 import com.example.FindDoc.entity.EventsDetails;
+import com.example.FindDoc.entity.HospitalDetails;
 import com.example.FindDoc.entity.NewsDetails;
 import com.example.FindDoc.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface service {
     List<User> getAllDetails();
@@ -23,4 +25,9 @@ public interface service {
     EventsDetails getEventById(int id);
 
     EventsDetails createEvent(EventsDetails eventDetails);
+    List<HospitalDetails> GetHospitalDetails();
+
+    void insertDetailsHospital(HospitalDetails h);
+
+    Optional<HospitalDetails> selectById(String n);
 }
