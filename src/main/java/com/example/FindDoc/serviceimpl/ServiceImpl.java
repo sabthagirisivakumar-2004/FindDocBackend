@@ -27,11 +27,16 @@ public class ServiceImpl implements service {
     EventsRepository eventsRepository;
     @Autowired
     Repo hospitalDetailrepo;
+    @Autowired
+    UserRepository u;
     @Override
     public List<User> getAllDetails() {
         return UserRepo.findAll() ;
     }
-
+    @Override
+    public User findByEmail(String mail){
+        return u.findByEmail(mail);
+    }
     @Override
     public User postAllDetails(AuthenticationDTO Auth) {
 
@@ -44,10 +49,7 @@ public class ServiceImpl implements service {
     }
 
 
-    @Override
-    public User findByEmail(String mail) {
-        return UserRepo.findByEmail(mail);
-    }
+
     @Override
     public List<NewsDetails> getAllNews() {
         return newsRepository.findAll();

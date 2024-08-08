@@ -30,4 +30,5 @@ public interface service {
     void insertDetailsHospital(HospitalDetails h);
 
     Optional<HospitalDetails> selectById(String n);
+
 }

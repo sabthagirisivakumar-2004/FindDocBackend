@@ -134,20 +134,32 @@ class Doctor {
     private String img;
     private String name;
     private String location;
+
+
+
+    private String Speciality;
     private String status;
 
     // Default constructor
     public Doctor() {}
 
     // Constructors
-    public Doctor(String img, String name, String location, String status) {
+    public Doctor(String img, String name, String location, String speciality, String status) {
         this.img = img;
         this.name = name;
         this.location = location;
+        Speciality = speciality;
         this.status = status;
     }
 
     // Getters and setters
+    public String getSpeciality() {
+        return Speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        Speciality = speciality;
+    }
     public String getStatus() {
         return status;
     }
