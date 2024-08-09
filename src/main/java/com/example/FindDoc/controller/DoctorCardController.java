@@ -1,5 +1,6 @@
 package com.example.FindDoc.controller;
 
+import com.example.FindDoc.Service.service;
 import com.example.FindDoc.entity.DoctorCard;
 import com.example.FindDoc.repository.DoctorCardRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import java.util.Optional;
 public class DoctorCardController {
     @Autowired
     DoctorCardRepo DC;
+    @Autowired
+    service s;
     @GetMapping("/doctorCardGet")
     public List<DoctorCard> getDoctorCard(){
         return DC.findAll();
@@ -22,6 +25,10 @@ public class DoctorCardController {
         DC.save(d);
         return "Posted Successfully";
 
+    }
+    @GetMapping("/searchDoctors/{txt}")
+    public List<DoctorCard> search(@PathVariable String txt){
+        return s.findByText(txt);
     }
     @GetMapping("/DoctorCardGetById/{n}")
     public Optional<DoctorCard> getById(@PathVariable int n){

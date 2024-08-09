@@ -1,10 +1,7 @@
 package com.example.FindDoc.Service;
 
 import com.example.FindDoc.DTO.AuthenticationDTO;
-import com.example.FindDoc.entity.EventsDetails;
-import com.example.FindDoc.entity.HospitalDetails;
-import com.example.FindDoc.entity.NewsDetails;
-import com.example.FindDoc.entity.User;
+import com.example.FindDoc.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +9,7 @@ import java.util.Optional;
 
 public interface service {
     List<User> getAllDetails();
-
+    List<DoctorCard> findByText(String txt);
     User postAllDetails(AuthenticationDTO user);
     User findByEmail(String mail);
     List<NewsDetails> getAllNews();

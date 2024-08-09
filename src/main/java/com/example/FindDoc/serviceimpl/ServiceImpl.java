@@ -2,22 +2,31 @@ package com.example.FindDoc.serviceimpl;
 
 import com.example.FindDoc.DTO.AuthenticationDTO;
 import com.example.FindDoc.Service.service;
-import com.example.FindDoc.entity.EventsDetails;
-import com.example.FindDoc.entity.HospitalDetails;
-import com.example.FindDoc.entity.NewsDetails;
-import com.example.FindDoc.entity.User;
+import com.example.FindDoc.entity.*;
 import com.example.FindDoc.repository.EventsRepository;
 import com.example.FindDoc.repository.NewsDetailsRepository;
 import com.example.FindDoc.repository.Repo;
 import com.example.FindDoc.repository.UserRepository;
+import com.mongodb.client.MongoClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.convert.MongoConverter;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.conversions.Bson;
+import java.util.concurrent.TimeUnit;
+import org.bson.Document;
+import com.mongodb.client.AggregateIterable;
+
 
 @Service
+@Component
 public class ServiceImpl implements service {
     @Autowired
     UserRepository UserRepo;
@@ -29,6 +38,11 @@ public class ServiceImpl implements service {
     Repo hospitalDetailrepo;
     @Autowired
     UserRepository u;
+
+    @Autowired
+    MongoClient client;
+    @Autowired
+    MongoConverter convert;
     @Override
     public List<User> getAllDetails() {
         return UserRepo.findAll() ;
@@ -37,6 +51,20 @@ public class ServiceImpl implements service {
     public User findByEmail(String mail){
         return u.findByEmail(mail);
     }
+    @Override
+    public List<DoctorCard> findByText(String txt){
+        final List<DoctorCard> Dcards= new ArrayList<>();
+        MongoDatabase database = client.getDatabase("FindDoc");
+        MongoCollection<Document> collection = database.getCollection("DoctorCard");
+        AggregateIterable<Document> result = collection.aggregate(Arrays.asList(new Document("$search",
+                new Document("index", "default")
+                        .append("text",
+                                new Document("query", txt)
+                                        .append("path", Arrays.asList("name", "location", "speciality"))))));
+        result.forEach(doc -> Dcards.add(convert.read(DoctorCard.class,doc)));
+        return Dcards;
+    }
+
     @Override
     public User postAllDetails(AuthenticationDTO Auth) {
 
