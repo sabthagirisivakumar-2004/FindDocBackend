@@ -25,7 +25,7 @@ public String  insertHospitalDetials(@RequestBody HospitalDetails h){
 	return "posted successfully";
 }
 @GetMapping("/HospitalById/{n}")
-	public Optional<HospitalDetails> getById(@PathVariable String n){
+	public Optional<HospitalDetails> getById(@PathVariable int n){
 	return s.selectById(n);
 }
 }

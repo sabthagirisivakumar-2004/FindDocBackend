@@ -12,6 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import java.util.Arrays;
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.conversions.Bson;
+import java.util.concurrent.TimeUnit;
+import org.bson.Document;
+import com.mongodb.client.AggregateIterable;
 
 import java.util.*;
 
@@ -64,7 +73,20 @@ public class ServiceImpl implements service {
         result.forEach(doc -> Dcards.add(convert.read(DoctorCard.class,doc)));
         return Dcards;
     }
+    public List<HospitalCard> findByHcard(String txt){
+        List<HospitalCard> Hcards = new ArrayList<>();
+        MongoDatabase database = client.getDatabase("FindDoc");
+        MongoCollection<Document> collection = database.getCollection("HospitalCard");
+        AggregateIterable<Document> result = collection.aggregate(Arrays.asList(new Document("$search",
+                new Document("index", "default")
+                        .append("text",
+                                new Document("query", txt)
+                                        .append("path", Arrays.asList("Hspeciality", "Hlocation", "Hname"))))));
+        result.forEach(hos -> Hcards.add(convert.read(HospitalCard.class,hos)));
+        return Hcards;
 
+
+    }
     @Override
     public User postAllDetails(AuthenticationDTO Auth) {
 
@@ -116,7 +138,7 @@ public class ServiceImpl implements service {
     }
 
     @Override
-    public Optional<HospitalDetails> selectById(String n) {
+    public Optional<HospitalDetails> selectById(int n) {
         return hospitalDetailrepo.findById(n);
     }
 }

@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface service {
     List<User> getAllDetails();
     List<DoctorCard> findByText(String txt);
+    List<HospitalCard> findByHcard(String txt);
     User postAllDetails(AuthenticationDTO user);
     User findByEmail(String mail);
     List<NewsDetails> getAllNews();
@@ -26,6 +27,6 @@ public interface service {
 
     void insertDetailsHospital(HospitalDetails h);
 
-    Optional<HospitalDetails> selectById(String n);
+    Optional<HospitalDetails> selectById(int n);
 
 }

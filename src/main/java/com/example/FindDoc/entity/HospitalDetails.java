@@ -9,7 +9,7 @@ import java.util.List;
 public class HospitalDetails {
 
     @Id
-    private String id;
+    private int id;
 
     private String name;
     private String about;
@@ -44,11 +44,11 @@ public class HospitalDetails {
     // ...
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -129,7 +129,7 @@ public class HospitalDetails {
 class Doctor {
 
     @Id
-    private String id;
+    private int id;
 
     private String img;
     private String name;
@@ -184,11 +184,11 @@ class Doctor {
         this.img = img;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
